@@ -1,13 +1,16 @@
-FROM node AS stage-1
+FROM node:20-alpine AS build
 WORKDIR /app
-COPY . .
 
-RUN npm install
+COPY roles-in-project-management/package*.json ./
+COPY roles-in-project-management/tsconfig*.json ./
+COPY roles-in-project-management/vite.config.ts ./
+COPY roles-in-project-management/ ./
 
+RUN npm ci || npm install
 RUN npm run build
 
-FROM nginx AS production-stage
+FROM nginx:alpine AS production
 
-COPY --from=stage-1 /app/build /usr/share/nginx/html
+COPY --from=build /app/dist /usr/share/nginx/html
 
 EXPOSE 80
