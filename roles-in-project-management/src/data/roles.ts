@@ -15,10 +15,6 @@ export const roles: Role[] = [
     ],
     skills: ["Executive leadership", "Strategic thinking", "Decision-making", "Stakeholder influence"],
     related: ["project-manager", "steering-committee"],
-    sources: [
-      { label: "PMBOK Guide (Stakeholders)", url: "https://www.pmi.org/pmbok-guide-standards" },
-      { label: "Project Executive (Wikipedia)", url: "https://en.wikipedia.org/wiki/Project_executive" },
-    ],
   },
   {
     id: "project-manager",
@@ -42,9 +38,6 @@ export const roles: Role[] = [
       "Negotiation",
     ],
     related: ["project-sponsor", "business-analyst", "pmo"],
-    sources: [
-      { label: "Project manager (Wikipedia)", url: "https://en.wikipedia.org/wiki/Project_manager" },
-    ],
   },
   {
     id: "business-analyst",

@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import RoleCard from "../components/RoleCard";
 import { roles, categories, categoryInfo } from "../data/roles";
 
@@ -25,7 +26,7 @@ export default function RolesIndex() {
   return (
     <div className="shell">
       <aside className="sidebar">
-        <div className="sidecard">
+        <motion.div className="sidecard" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .25 }}>
           <div className="side-row">
             <span className="side-label">Category</span>
             <span className="badge">{category}</span>
@@ -39,33 +40,47 @@ export default function RolesIndex() {
               ))}
             </ul>
           )}
-        </div>
+        </motion.div>
       </aside>
       <div className="container">
         <header>
-          <h1>Roles in Project Management</h1>
+          <motion.h1 initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .25 }}>
+            Roles in Project Management
+          </motion.h1>
           <p className="lead">
             Explore governance, delivery, agile, support, and external roles across the lifecycle.
           </p>
-          <div className="filters">
-            <input
+          <motion.div className="filters" initial="hidden" animate="show" variants={{ hidden: { opacity: 0, y: 6 }, show: { opacity: 1, y: 0, transition: { staggerChildren: .06 } } }}>
+            <motion.input
               className="input"
               placeholder="Search roles, responsibilities, skills..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
+              variants={{ hidden: { opacity: 0, y: 6 }, show: { opacity: 1, y: 0 } }}
             />
-            <select className="select" value={category} onChange={(e) => setCategory(e.target.value)}>
+            <motion.select className="select" value={category} onChange={(e) => setCategory(e.target.value)} variants={{ hidden: { opacity: 0, y: 6 }, show: { opacity: 1, y: 0 } }}>
               <option>All</option>
               {categories.map((c) => (
                 <option key={c}>{c}</option>
               ))}
-            </select>
-          </div>
+            </motion.select>
+          </motion.div>
         </header>
         <section className="grid">
-          {filtered.map((r) => (
-            <RoleCard key={r.id} role={r} />)
-          )}
+          <AnimatePresence mode="popLayout">
+            {filtered.map((r) => (
+              <motion.div
+                key={r.id}
+                layout
+                initial={{ opacity: 0, y: 10, scale: .98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: .98 }}
+                transition={{ duration: .22 }}
+              >
+                <RoleCard role={r} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </section>
       </div>
     </div>

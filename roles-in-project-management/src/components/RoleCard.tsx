@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import type { Role } from "../types";
 
 type Props = { role: Role };
 
 export default function RoleCard({ role }: Props) {
   return (
-    <div className="role-card">
+    <motion.div className="role-card" whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }} initial={false}>
       <h3 className="role-title">
         <Link to={`/roles/${role.id}`}>{role.name}</Link>
       </h3>
@@ -13,7 +14,7 @@ export default function RoleCard({ role }: Props) {
       <div className="role-meta">
         <span className="badge">{role.category}</span>
       </div>
-    </div>
+    </motion.div>
   );
 }
 
